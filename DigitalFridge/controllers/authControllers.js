@@ -1,86 +1,44 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const bcrypt = require('bcrypt');
+const User = require("../models/User");
 
-module.exports.signup = (req,res) => {
-    const { name, email, password } = req.body;
-
-    if(!name || !email || !password){
-        res.status(400).json({msg: 'Please enter all fields'});
+exports.registerNewUser = async (req, res) => {
+  try {
+    let isUser = await User.find({ email: req.body.email });
+    console.log(isUser);
+    if (isUser.length >= 1) {
+      return res.status(409).json({
+        message: "email already in use"
+      });
     }
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    });
+    let data = await user.save();
+    const token = await user.generateAuthToken(); // here it is calling the method that we created in the model
+    res.status(201).json({ data, token });
+  } catch (err) {
+    res.status(400).json({ err: err });
+  }
+};
 
-    User.findOne({email})
-    .then(user => {
-        if(user) return res.status(400).json({msg: 'User already exists'});
-
-        const newUser = new User({ name, email, password });
-
-        // Create salt and hash
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(password, salt, (err, hash) => {
-                if(err) throw err;
-                newUser.password = hash;
-                newUser.save()
-                    .then(user => {
-                        jwt.sign(
-                            { id: user._id },
-                            config.get('jwtsecret'),
-                            { expiresIn: 3600 },
-                            (err, token) => {
-                                if(err) throw err;
-                                res.json({
-                                    token,
-                                    user: {
-                                        id: user._id,
-                                        name: user.name,
-                                        email: user.email
-                                    }
-                                });
-                            }
-                        )
-                    });
-            })
-        })
-    })
-}
-
-module.exports.login = async (req,res) => {
-    const { email, password } = req.body;
-    if(!email || !password){
-        res.status(400).json({msg: 'Please enter all fields'});
+exports.loginUser = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = await User.findByCredentials(email, password);
+    if (!user) {
+      return res
+        .status(401)
+        .json({ error: "Login failed! Check authentication credentials" });
     }
-    User.findOne({email})
-        .then(user => {
-            if(!user) return res.status(400).json({msg: 'User does not exist'});
+    const token = await user.generateAuthToken();
+    res.status(201).json({ user, token });
+  } catch (err) {
+    res.status(400).json({ err: err });
+  }
+};
 
-            // Validate password
-            bcrypt.compare(password, user.password)
-                .then(isMatch => {
-                    if(!isMatch) return res.status(400).json({ msg: 'Invalid credentials'});
-
-                    jwt.sign(
-                        { id: user._id },
-                        config.get('jwtsecret'),
-                        { expiresIn: 3600 },
-                        (err, token) => {
-                            if(err) throw err;
-                            res.json({
-                                token,
-                                user: {
-                                    id: user._id,
-                                    name: user.name,
-                                    email: user.email
-                                }
-                            });
-                        }
-                    )
-                })
-        })
-}
-
-module.exports.get_user = (req,res) => {
-    User.findById(req.user.id)
-        .select('-password')
-        .then(user => res.json(user));
-}
+exports.getUserDetails = async (req, res) => {
+  await res.json(req.userData);
+};
