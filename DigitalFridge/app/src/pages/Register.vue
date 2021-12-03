@@ -1,10 +1,10 @@
 <template>
-  <div class="upload">
+  <div class="register">
     <register />
   </div>
 </template>
 <script>
-import register from "@/components/upload";
+import register from "@/components/register";
 export default {
   components: {
     register
