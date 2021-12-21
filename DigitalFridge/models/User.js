@@ -28,13 +28,18 @@ const UserSchema = new Schema({
         default: Date.now
     },
     tokens: [
-        {
-          token: {
-            type: String,
-            required: true
-          }
+      {
+        token: {
+          type: String,
+          required: true
         }
-      ]
+      }
+    ],
+    boards: [
+      {
+        type: String,
+      }
+    ]
 })
 
 UserSchema.pre("save", async function(next) {

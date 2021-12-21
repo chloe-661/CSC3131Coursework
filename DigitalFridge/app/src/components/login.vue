@@ -1,19 +1,18 @@
 <template>
-  <div class="container">
+  <div class="container pt-5">
     <div class="row">
       <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1">
         <form
-          class="text-center p-5"
-          style="margin-top:35px;height:auto;padding-top:50px !important;"
+          class="text-center"
           @submit.prevent="loginUser"
         >
         <!-- Email -->
-          <h2>Log in</h2>
+          <h2>LOG IN</h2>
           <br />
           <input
             type="text"
             id="email"
-            class="form-control mb-5"
+            class="form-control"
             placeholder="Email"
             v-model="login.email"
           />
@@ -21,7 +20,7 @@
           <input
             type="password"
             id="password"
-            class="form-control mb-5"
+            class="form-control"
             placeholder="Password"
             v-model="login.password"
           />
@@ -32,7 +31,7 @@
           </p>
           <!-- Sign in button -->
           <center>
-            <button class="btn btn-primary btn-block w-75 my-4" type="submit">
+            <button class="btn btn-secondary btn-block w-50 my-4" type="submit">
               Sign in
             </button>
           </center>
@@ -42,6 +41,9 @@
   </div>
 </template>
 <script>
+import swal from "sweetalert";
+import http from "../services/http-commons";
+
 export default {
   data() {
     return {
@@ -52,17 +54,30 @@ export default {
     };
   },
   methods: {
-    async loginUser() {}
+    async loginUser() {
+      try {
+        //Calls the login API
+        //Takes the auth token from the API response
+        //Stores the token as that means auth was successful
+        let response = await http.post("user/login", this.login);
+        
+        let token = response.data.token;
+        localStorage.setItem("jwt", token);
+
+        if (token) {
+
+          this.$router.push("/board");
+            swal("Success", "Login Successful", "success");
+        }
+      } catch (err) {
+        swal("Error", "Something Went Wrong", "error");
+      }
+    }
   }
 };
 </script>
-<style scoped lang="css">
-    form {
-        background-color: #313636;
-        color: #D8E1E0;
-    }
-
-    input {
-        border-color: #37bfc2;
-    }
+<style scoped lang="scss">
+.container {
+  height: 110vh;
+}
 </style>

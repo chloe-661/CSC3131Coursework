@@ -12,7 +12,8 @@ exports.registerNewUser = async (req, res) => {
     const user = new User({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      boards: [ req.body.boards ]
     });
     let data = await user.save();
     const token = await user.generateAuthToken(); // here it is calling the method that we created in the model

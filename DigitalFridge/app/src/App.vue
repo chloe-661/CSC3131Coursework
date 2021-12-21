@@ -1,79 +1,116 @@
 <template>
   <div id="app">
-    <nav>
-      <div>
-        <ul>
-          <li class="logo"><router-link to="/"><img src="./assets/digitalFridgeInverse.png" /></router-link></li>
-          <li class="nav-item"><router-link to="/">Home</router-link></li>
-          <li class="nav-item"><router-link to="/board">My Board</router-link></li>
-          <li class="nav-item"><router-link to="/upload">Upload</router-link></li>
-          <li class="nav-item" style="float:right"><router-link to="/login">Login</router-link></li>
-          <li class="nav-item" style="float:right"><router-link to="/register">Register</router-link></li>
-        </ul>
-      </div>
-    </nav>
-    <div class="p-3">
+    <headerNav />
+    <div style="padding-top: 4em">
       <router-view />
     </div>
   </div>
 </template>
 
 <script>
+import headerNav from './components/headerNav';
+
 export default {
-  name: "app"
+  
+  name: "app",
+  components: {
+    headerNav
+  },
 };
 </script>
 
-<style lang="css">
+<style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Teko:wght@700&display=swap');
+  @import './styles/variables.css';
 
-  nav ul {
-    list-style-type: none;
+  /*-------------Reset-------------*/
+  button {
+    background: none;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--color-neutral-lt);
+  }
+
+  button:focus,
+  input:focus {
+    outline: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /*-------------Layout-------------*/
+  #app {
+    line-height: 1.5em;
+    padding: 0;
     margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #D8E1E0;
+    height: 100vh;
+    background-color: var(--color-background-lt);
   }
 
-  nav li {
-    float: left;
+  @mixin main-gradient {
+    background: var(--color-primary);
+    background: -webkit-linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+    background: linear-gradient(45deg, var(--color-secondary),var(--color-primary));
   }
 
-  nav li a {
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    
+  @mixin secondary-gradient {
+    background: var(--color-secondary);
+    background: -webkit-linear-gradient(45deg, var(--color-secondary), var(--color-neutral-lt));
+    background: linear-gradient(45deg, var(--color-neutral-lt), var(--color-secondary));
+  }
+
+  @mixin shadow-box {
+    background-color: var(--color-neutral-lt);
+    box-shadow: var(--shadow);
+  }
+
+  @mixin skew {
+    transform: skew(-20deg);
+  }
+
+  @mixin unskew {
+    transform: skew(20deg);
+  }
+
+  .skew {
+    @include skew;
+  }
+
+  .un-skew {
+    @include unskew;
+  }
+
+  h1, h2, h3, a {
     font-family: 'oswald';
-    max-height: 52px;
   }
 
-  nav li a:hover:not(.active) {
-    background-color: #313636;
-    color: #D8E1E0;
-    text-decoration: none;
+  p {
+    color: var(--color-neutral-dk);
+    font-family: var(--headings-font);
   }
 
-  nav .logo {
-      font-family: 'Teko', sans-serif;
-      font-size: 25px;
+
+
+  form {
+    @include shadow-box;
+    @include secondary-gradient;
+    // background-color: linear-gradient(45deg, red, var(--color-neutral-dk));
+    padding: 2em;
+    text-align: center;
   }
 
-  nav .logo a {
-    padding: 0;
+  form input {
+    border-color: var(--color-neutral-dk);
+    max-width: 80%;
+    margin: auto;
+    margin-bottom: 1em;
   }
 
-  nav .logo img {
-    max-height: 52px;
-  }
+  // h1, h2, h3 {
+  //   font-family: 'Teko', sans-serif;
+  // }
 
-  h1, h2, h3 {
-    font-family: 'Teko', sans-serif;
-  }
-
-  p, a {
-     font-family: 'oswald';
-  }
 </style>
