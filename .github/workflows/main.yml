@@ -33,8 +33,24 @@ jobs:
       - name: Lint 🧐
         run: npm run lint
 
-      - name: Build 🏗️
-        run: npm run build
+      # - name: Build 🏗️
+      #   run: npm run build
 
       - name: Test 🚨
         run: npm test
+
+        - name: Install Web 🔧
+        run: npm install
+        working-directory: ./client/app
+
+      - name: Lint Web 🧐
+        run: npm run lint
+        working-directory: ./client/app
+
+      - name: Build Web🏗️
+        run: npm run build
+        working-directory: ./client/app
+      
+      - name: Test Web 🚨
+        run: npm test
+        working-directory: ./client/app
