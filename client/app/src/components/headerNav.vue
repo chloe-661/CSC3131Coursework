@@ -9,7 +9,6 @@
         <div class="nav right">
             <h4>{{getUserName}} </h4>
             <router-link to="/boards"    class="nav-link">       <span class="nav-link-span"><span class="u-nav">My Boards   </span></span></router-link>
-            <router-link to="/upload"   class="nav-link">       <span class="nav-link-span"><span class="u-nav">Upload      </span></span></router-link>
             <router-link  to="/register" class="nav-link">       <span class="nav-link-span"><span class="u-nav">Register    </span></span></router-link>
             <router-link to="/login"    class="nav-link">       <span class="nav-link-span"><span class="u-nav">Login       </span></span></router-link>
             <a class="nav-link logout" @click="logUserOut()">       <span class="nav-link-span"><span class="u-nav">Logout      </span></span></a>

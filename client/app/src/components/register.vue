@@ -81,7 +81,7 @@ export default {
         
         if (token) {
           localStorage.setItem("jwt", token);
-          this.$router.push("/");
+          this.$router.push("/boards");
           swal("Success", "Registration Was successful", "success");
         } 
         else {

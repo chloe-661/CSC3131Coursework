@@ -68,7 +68,7 @@ export default {
 
         if (token) {
 
-          this.$router.push("/board");
+          this.$router.push("/boards");
           swal("Success", "Login Successful", "success");
         }
       } catch (err) {
