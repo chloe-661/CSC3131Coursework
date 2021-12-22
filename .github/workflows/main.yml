@@ -32,22 +32,6 @@ jobs:
       - name: Lint 🧐
         run: npm run lint
 
-      - name: Test 🚨
-        run: npm test
-
-      - name: Install Web 🔧
-        working-directory: ./client/app
-        run: npm install
-        
-
-      - name: Lint Web 🧐
-        working-directory: ./client/app
-        run: npm run lint
-
-      - name: Build Web🏗️
-        working-directory: ./client/app
-        run: npm run build
-
   buildFrontEnd:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -67,7 +51,7 @@ jobs:
       - name: Lint 🧐
         run: npm run lint
               
-      - name: Build Web🏗️
+      - name: Build 🏗️
         run: npm run build
 
 
