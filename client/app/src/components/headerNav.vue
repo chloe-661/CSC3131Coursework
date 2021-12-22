@@ -3,7 +3,6 @@
     <header id="nav-wrapper">
         <nav id="nav">
         <div class="nav left">
-            <!-- <router-link to="/"><span class="gradient skew"><h1 class="logo un-skew">Home</h1></span></router-link> -->
             <span class="gradient skew"><h1 class="logo un-skew"><router-link to="/"><img src= "../assets/Note_white.png"/>Digital Fridge</router-link></h1></span>
             <button id="menu" class="btn-nav"><span class="fas fa-bars"></span></button>
         </div>
@@ -23,9 +22,7 @@
 
 <script>
 import VueJwtDecode from "vue-jwt-decode";
-// import emitter from "../services/emitter";
 import swal from "sweetalert";
-// import Vue from "vue";
 
 export default {
   name: 'headerNav',
@@ -35,15 +32,18 @@ export default {
     };
   },
   methods: {
+    //Gets the users details from the local storage (everything except password)
     getUserDetails() {
       let token = localStorage.getItem("jwt");
-      let decoded
+      let decoded;
+
       if (token){
         decoded = VueJwtDecode.decode(token);
       }
+      
       this.user = decoded;
-      console.log(this.user);
     },
+    //Logs the user out
     logUserOut() {
       localStorage.removeItem("jwt");
       this.user = {};

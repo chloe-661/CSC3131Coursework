@@ -11,8 +11,6 @@
         </div>
         <gallery :content="this.content" />
 
-
-
         <div v-if="this.addText" > 
           <div class="container pt-5 popup">
             <div class="row">
@@ -63,12 +61,6 @@ export default {
       content: [],
       addText: false,
       text: "",
-      notes: [
-        "Happy Birthday!",
-        "MERRY CHRISTMAS!",
-        "SHOPPING LIST: Bread 2.Milk 3.Orange Juice 4.Biscuits 5.Teabags",
-      ],
-      colorlist: ["#6b3e26", "#ffc5d9", "#c2f2d0", "#fdf5c9", "#ffcb85"],
     };
   },
   methods:{
@@ -85,9 +77,11 @@ export default {
     getUserDetails() {
       let token = localStorage.getItem("jwt");
       let decoded
+      
       if (token){
         decoded = VueJwtDecode.decode(token);
       }
+      
       this.user = decoded;
       console.log(this.user);
     },
@@ -101,16 +95,12 @@ export default {
           boardId: this.$route.params.boardId,
         }
 
-
-
         let response = await http.post("user/board", par);
-        console.log("response" + JSON.stringify(response));
 
-        // console.log(response.data.board.boards.content.length);
         for (var i = 0; i < response.data.board[0].boards[0].content.length; i++){
             this.content.push(response.data.board[0].boards[0].content[i]);
         }
-        console.log(this.content);
+
       } catch (err) {
         swal("Error", "Something Went Wrong", "error");
       }
@@ -159,7 +149,6 @@ export default {
     margin: 1em 0 1em 0;
     display: block;
 }
-
 
 hr {
     margin: 2em 0 2em 0;

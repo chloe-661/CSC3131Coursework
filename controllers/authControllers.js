@@ -1,7 +1,9 @@
 const User = require("../models/User");
 
+//This passes on the details of the user to the database
 exports.registerNewUser = async (req, res) => {
   try {
+    //Checks to see if the email already exists in the db
     let isUser = await User.find({ email: req.body.email });
     console.log(isUser);
     if (isUser.length >= 1) {
@@ -9,6 +11,7 @@ exports.registerNewUser = async (req, res) => {
         message: "email already in use"
       });
     }
+    //If not, create a new user
     const user = new User({
       name: req.body.name,
       email: req.body.email,
@@ -27,17 +30,19 @@ exports.registerNewUser = async (req, res) => {
       ]
     });
     let data = await user.save();
-    const token = await user.generateAuthToken(); // here it is calling the method that we created in the model
+    const token = await user.generateAuthToken();
     res.status(201).json({ data, token });
   } catch (err) {
     res.status(400).json({ err: err });
   }
 };
 
+//This looks for the user in the database
 exports.loginUser = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
+    //Try to find the user based on login credentials
     const user = await User.findByCredentials(email, password);
     if (!user) {
       return res
@@ -51,6 +56,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+//Gets the users's details back - this gets the entire schema
 exports.getUserDetails = async (req, res) => {
   await res.json(req.userData);
 };

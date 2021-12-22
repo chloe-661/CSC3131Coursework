@@ -58,6 +58,7 @@ const router = createRouter({
   routes,
 });
 
+//This checks that the user is logged in when they access some pages
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage.getItem("jwt") == null) {

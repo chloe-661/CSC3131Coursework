@@ -11,7 +11,6 @@
 import headerNav from './components/headerNav';
 
 export default {
-  
   name: "app",
   components: {
     headerNav
@@ -42,13 +41,6 @@ export default {
   }
 
   /*-------------Layout-------------*/
-  #app {
-    line-height: 1.5em;
-    padding: 0;
-    margin: 0;
-    height: 100vh;
-    background-color: var(--color-background-lt);
-  }
 
   @mixin main-gradient {
     background: var(--color-primary);
@@ -75,6 +67,14 @@ export default {
     transform: skew(20deg);
   }
 
+  #app {
+    line-height: 1.5em;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    background-color: var(--color-background-lt);
+  }
+
   .skew {
     @include skew;
   }
@@ -92,12 +92,11 @@ export default {
     font-family: var(--headings-font);
   }
 
-
+  /*-------------Layout-------------*/
 
   form {
     @include shadow-box;
     @include secondary-gradient;
-    // background-color: linear-gradient(45deg, red, var(--color-neutral-dk));
     padding: 2em;
     text-align: center;
   }
@@ -108,9 +107,4 @@ export default {
     margin: auto;
     margin-bottom: 1em;
   }
-
-  // h1, h2, h3 {
-  //   font-family: 'Teko', sans-serif;
-  // }
-
 </style>

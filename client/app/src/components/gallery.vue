@@ -59,7 +59,6 @@ export default {
    padding: 0px;
    text-decoration: none;
    list-style: none;
-   font-family: helvetica neue, helvetica, arial, sans-serif;
 }
 
 .grid-container {

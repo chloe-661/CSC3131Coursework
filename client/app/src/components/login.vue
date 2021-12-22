@@ -6,9 +6,10 @@
           class="text-center"
           @submit.prevent="loginUser"
         >
-        <!-- Email -->
           <h2>LOG IN</h2>
           <br />
+
+          <!-- Email -->
           <input
             type="text"
             id="email"
@@ -16,6 +17,7 @@
             placeholder="Email"
             v-model="login.email"
           />
+
           <!-- Password -->
           <input
             type="password"
@@ -24,11 +26,11 @@
             placeholder="Password"
             v-model="login.password"
           />
+          
           <p>
-            Dont have an account??<router-link to="/register"
-              > click here</router-link
-            >
+            Dont have an account??<router-link to="/register"> click here</router-link>
           </p>
+
           <!-- Sign in button -->
           <center>
             <button class="btn btn-secondary btn-block w-50 my-4" type="submit">

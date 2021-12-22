@@ -50,7 +50,6 @@
 <script>
 import swal from "sweetalert";
 import http from "../services/http-commons";
-//import emitter from "../services/emitter"
 
 export default {
   data() {
@@ -59,6 +58,7 @@ export default {
         name: "",
         email: "",
         password: "",
+        //Creates the users first board so that they always have at least one
         boardNames: { 
           boardId: "", 
           name: "myFirstBoard", 
@@ -73,20 +73,22 @@ export default {
       try {
         this.register.boardNames.boardId = this.genId();
 
-
         //Calls the register API
         //Takes the auth token from the API response
         //Stores the token as that means registration was successful
         let response = await http.post("user/register", this.register);
         let token = response.data.token;
+        
         if (token) {
           localStorage.setItem("jwt", token);
           this.$router.push("/");
           swal("Success", "Registration Was successful", "success");
-        } else {
+        } 
+        else {
           swal("Error", "Something Went Wrong", "Error");
         }
-      } catch (err) {
+      } 
+      catch (err) {
         //Catches http error responses
         let error = err.response;
         if (error.status == 409) {
@@ -96,6 +98,7 @@ export default {
         }
       }
     },
+    //Generates a UUID
     genId() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         const r = (Math.random() * 16) | 0;

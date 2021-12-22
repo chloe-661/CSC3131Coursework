@@ -10,7 +10,7 @@
 export default {
 };
 </script>
-<style scoped lang="css">
+<style scoped lang="scss">
     div {
         text-align: center;
         padding-top: 50px;

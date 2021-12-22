@@ -18,19 +18,13 @@
 </template>
 
 <script>
-// import gallery from "@/components/gallery";
-// import shared from "@/components/shared";
 import http from "../services/http-commons";
 import swal from "sweetalert";
 import VueJwtDecode from "vue-jwt-decode";
-// import board from "@/components/board";
 
 export default {
   name: 'boards',
   components: {
-    // gallery,
-    // shared,
-    // board,
   },
   props: {
     boardName: {
@@ -41,48 +35,41 @@ export default {
     return {
       user: {},
       boards: [],
-      images: [],
-      notes: [
-        "Happy Birthday!",
-        "MERRY CHRISTMAS!",
-        "SHOPPING LIST: Bread 2.Milk 3.Orange Juice 4.Biscuits 5.Teabags",
-      ],
-      colorlist: ["#6b3e26", "#ffc5d9", "#c2f2d0", "#fdf5c9", "#ffcb85"],
     };
   },
   methods:{
+    //Loads the next page
     goToBoard(b){
-        // this.props.boardName = b;
-        // this.$router.push();
         console.log(b);
         this.$router.push({ name: 'MyBoard', params: { boardName: b.name, boardId: b.boardId } })
     },
+    //Gets the users details
     getUserDetails() {
       let token = localStorage.getItem("jwt");
       let decoded
+      
       if (token){
         decoded = VueJwtDecode.decode(token);
       }
+      
       this.user = decoded;
-      console.log(this.user);
     },
     async getBoard() {
       try {
         this.getUserDetails();
-        console.log(this.user._id);
 
         let response = await http.post("user/boards", this.user);
-        console.log("response" + JSON.stringify(response));
+
         for (var i = 0; i < (response.data.board.boardNames).length; i++){
             this.boards.push(response.data.board.boardNames[i]);
         }
-      } catch (err) {
+      } 
+      catch (err) {
         swal("Error", "Something Went Wrong", "error");
       }
     }
   },
-    created: function () {
-    
+  created: function () {  
     this.getBoard();
   }
 }
