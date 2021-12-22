@@ -47,10 +47,6 @@ jobs:
       - name: Build Web🏗️
         working-directory: ./client/app
         run: npm run build
-      
-      - name: Test Web 🚨
-        working-directory: ./client/app
-        run: npm test
 
   buildFrontEnd:
     # The type of runner that the job will run on
@@ -73,9 +69,6 @@ jobs:
               
       - name: Build Web🏗️
         run: npm run build
-
-      - name: Test 🚨
-        run: npm test
 
 
 
