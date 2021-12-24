@@ -4,8 +4,16 @@
     <div class="grid-item placeholder"></div>
     
     <div class="content">
+      <div class="productsRow" v-for="i in content " :key="i.contentId" >
+        <a v-if="i.noteType === 'text'">{{ i.src }}</a>
+        <img v-if="i.noteType === 'image'" src="i.src" />
+      </div>
+
+
+
+
       <div class="productsRow">
-        <a href="#"></a>
+        <a href="#">{{ content }}</a>
         <a href="#"></a>
         <a href="#"></a>
         <a href="#"></a>
@@ -48,7 +56,11 @@
 export default {
   name: 'gallery',
   props: ['content'],
+  method: {
+
+  },
   created(){
+    // console.log("1"+ {{ content }});
   }
 }
 </script>

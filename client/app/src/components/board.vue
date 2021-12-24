@@ -100,6 +100,7 @@ export default {
         for (var i = 0; i < response.data.board[0].boards[0].content.length; i++){
             this.content.push(response.data.board[0].boards[0].content[i]);
         }
+        console.log(this.content);
 
       } catch (err) {
         swal("Error", "Something Went Wrong", "error");
